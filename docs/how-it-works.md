@@ -16,14 +16,14 @@ The front page shows what wish does. This page walks through `wish.cpp` and list
 
 1. It checks the redirect first. A `>` needs a command before it and exactly one file name after it.
 2. Built-ins run inside the shell itself.
-3. For any other command it tries each directory in the search path with `access()` and `X_OK`, and takes the first match.
+3. For any other command it tries each directory in the search path with `access()` and `X_OK`, and takes the first match. If none has it, that's an error.
 4. It calls `fork()`. With a redirect, the child opens the file, creating or truncating it, and points standard output and standard error at it with `dup2()`.
 5. The child calls `execv()`. If that returns, the child prints the error and exits with `_exit(1)`, so it never goes on as a second copy of the shell.
 
 ## Built-ins
 
 - `exit` takes no arguments and ends the shell.
-- `cd` takes exactly one argument and calls `chdir()`.
+- `cd` takes exactly one argument and calls `chdir()`. If `chdir()` fails, that's an error.
 - `path` replaces the search path with its arguments. With no arguments the path is empty, and only the built-ins still work.
 
 A built-in with a redirect is an error.

@@ -28,7 +28,7 @@ The built-ins are `exit`, `cd` and `path`. If a command can't run, wish prints t
 
 ## Design choices
 
-Built-ins run inside the shell itself, because a child process can't change the shell's working directory or its search path.
+Built-ins have to run inside the shell itself. A child process can't change the shell's working directory or its search path, and `exit` in a child would only end the child.
 
 I made `>` and `&` tokens of their own in the tokenizer, so `ls>out` and `ls&pwd` work without spaces.
 
